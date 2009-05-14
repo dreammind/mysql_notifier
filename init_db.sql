@@ -9,22 +9,32 @@ create table users(
        id int auto_increment not null,
        name varchar(128),
        index (name),
-       primary key (id));
+       primary key (id)
+       ) ENGINE=InnoDB;
+
+--       userID int,
+--       constraint fk_user_attributes_to_user foreign key(userID) references user(id),
+--      user_id int references users(id),
 
 create table user_attributes (
        id int auto_increment not null,
        k varchar(128) not null,
        v varchar(512),
-       user_id int references users(id),
+       user_id int,
+       constraint fk_user_attributes_to_user foreign key(user_id) references users(id),
        index (user_id),
        index (k),
-       primary key (id));
+       primary key (id)
+       ) ENGINE=InnoDB;
 
 create table event_queues (
        id int auto_increment not null,
-       user_attribute_id int references user_attributes(id),
+       user_attribute_id int,
+       constraint fk_event_queues_to_user 
+	   foreign key(user_attribute_id) references user_attributes(id),
        index (user_attribute_id),
-       primary key (id));
+       primary key (id)
+       ) ENGINE=InnoDB;
 
 delimiter |
 create trigger ins_queues after insert on user_attributes
