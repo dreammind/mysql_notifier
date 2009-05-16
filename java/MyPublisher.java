@@ -98,6 +98,8 @@ public class MyPublisher {
 		    Thread.sleep(1 * 1000);
 		    EventQueue[] events = entityManager.find(EventQueue.class);
 		    if (events.length > 0) {
+			System.out.println("[debug] events occured. length:"
+					   +events.length);
 			notifies(events);
 			entityManager.delete(events);
 		    }
