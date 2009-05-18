@@ -1,7 +1,9 @@
 import net.java.ao.Entity;
 import net.java.ao.OneToOne;
+import net.java.ao.Preload;
 import net.java.ao.schema.Table;
 
+@Preload({"k","v","user_id"})
 @Table("user_attributes")
 public interface UserAttribute extends Entity {
     public int getId();
