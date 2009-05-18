@@ -22,6 +22,7 @@ import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 
 import net.java.ao.EntityManager;
+import net.java.ao.DBParam;
 import net.java.ao.schema.UnderscoreFieldNameConverter;
 import net.java.ao.schema.UnderscoreTableNameConverter;
 
@@ -80,11 +81,10 @@ public class MyPublisher {
 		    if (users.length == 0) {
 			continue;
 		    }
-		    Map<String,Object> map = new HashMap<String,Object>();
-		    map.put("k", tattr.getK());
-		    map.put("v", tattr.getV());
-		    map.put("user_id", tattr.user_id);
-		    UserAttribute attr = entityManager.create(UserAttribute.class, map);
+		    UserAttribute attr = entityManager.create(UserAttribute.class, 
+					      new DBParam("k", tattr.k));
+		    attr.setV(tattr.v);
+		    attr.setUser(users[0]);
 		    attr.save();
 		}
 	    } catch(SQLException e) {
