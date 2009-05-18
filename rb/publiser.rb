@@ -61,13 +61,15 @@ class PublisherHandler
 
     u = {}; all_attrs = []
     events.each do |event|
-      t_user_attr = TUserAttribute.new
-      t_user_attr.k = event.user_attribute.k
-      t_user_attr.v = event.user_attribute.v
-      t_user_attr.user_id = event.user_attribute.user_id
+      uattr = event.user_attribute
 
-      u[event.user_attribute.user_id] = [] if !u[event.user_attribute.user_id]
-      u[event.user_attribute.user_id].push(t_user_attr)
+      t_user_attr = TUserAttribute.new
+      t_user_attr.k = uattr.k
+      t_user_attr.v = uattr.v
+      t_user_attr.user_id = uattr.user_id
+
+      u[uattr.user_id] = [] if !u[uattr.user_id]
+      u[uattr.user_id].push(t_user_attr)
 
       all_attrs.push(t_user_attr) if @subscribers[0]
     end
